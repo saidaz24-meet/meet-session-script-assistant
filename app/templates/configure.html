@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Configure Session</h2>
+<form method="post" action="{{ url_for('web.configure_action') }}">
+  <fieldset>
+    <legend>Instructor Style</legend>
+    <label><input type="checkbox" name="instructor_style" value="Loai" checked> Loai</label>
+    <label><input type="checkbox" name="instructor_style" value="playful" checked> playful</label>
+    <label><input type="checkbox" name="instructor_style" value="call-and-response" checked> call-and-response</label>
+    <label><input type="checkbox" name="instructor_style" value="story-driven"> story-driven</label>
+    <label><input type="checkbox" name="instructor_style" value="Socratic"> Socratic</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Requested Modes</legend>
+    <label><input type="checkbox" name="requested_modes" value="hooks"> hooks</label>
+    <label><input type="checkbox" name="requested_modes" value="punchlines"> punchlines</label>
+    <label><input type="checkbox" name="requested_modes" value="acts"> acts</label>
+    <label><input type="checkbox" name="requested_modes" value="clarifying-Qs"> clarifying‑Qs</label>
+    <label><input type="checkbox" name="requested_modes" value="vibe-reset"> vibe‑reset</label>
+    <label><input type="checkbox" name="requested_modes" value="full-highlight-script" checked> full‑highlight‑script</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Context</legend>
+    <label><input type="checkbox" name="post_DU" checked> after heated DU</label>
+    <label><input type="checkbox" name="last_session_of_day"> last session of the day</label>
+    <label><input type="checkbox" name="mixed_skill" checked> mixed skill</label>
+    <label>Instructor count:
+      <input type="number" name="instructor_count" min="1" max="3" value="2">
+    </label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Custom Ideas (comma separated)</legend>
+    <input type="text" name="custom_ideas" placeholder="JS vs Python clarifier, Firebase skit" value="JS vs Python clarifier, Firebase skit">
+  </fieldset>
+
+  <fieldset>
+    <legend>MEET Values</legend>
+    {% for v in meet_values %}
+    <label><input type="checkbox" name="meet_values" value="{{ v }}" {% if loop.index0 < 3 %}checked{% endif %}> {{ v }}</label>
+    {% endfor %}
+  </fieldset>
+
+  <button class="button" type="submit">Save & Generate</button>
+</form>
+{% endblock %}

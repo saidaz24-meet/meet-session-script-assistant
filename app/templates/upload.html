@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Upload Slides (PDF / PPTX / TXT / MD)</h2>
+<form method="post" enctype="multipart/form-data" action="{{ url_for('web.upload_action') }}">
+  <input type="file" name="file" accept=".pdf,.pptx,.txt,.md" required>
+  <button class="button" type="submit">Upload & Extract</button>
+</form>
+<p class="hint">Max size: ~{{ config.MAX_CONTENT_LENGTH_MB }} MB.</p>
+{% endblock %}

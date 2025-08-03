@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Generated Highlight Script</h2>
+{% if output %}
+  <textarea rows="22" style="width:100%">{{ output }}</textarea>
+  <div class="actions">
+    <a class="button" href="{{ url_for('web.download_text', session_id=gen_id) }}">Download .txt</a>
+    <a class="button outline" href="{{ url_for('web.session_view', session_id=gen_id) }}">View Session JSON</a>
+  </div>
+{% else %}
+  <p>No output from the LLM. Check your GEMINI_API_KEY and try again.</p>
+{% endif %}
+{% endblock %}

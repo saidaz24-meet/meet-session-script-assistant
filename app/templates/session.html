@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Session Snapshot</h2>
+<p>ID: <code>{{ session_id }}</code></p>
+<pre class="pre">{{ data|tojson(indent=2) }}</pre>
+{% endblock %}
