@@ -21,8 +21,6 @@ if not firebase_admin._apps:  # ensures only runs once
     else:
         print("WARNING: Firebase credentials not found or path invalid.")
 
-# Create a global Firestore client
-db = firestore.client()
 
 
 def create_app():
