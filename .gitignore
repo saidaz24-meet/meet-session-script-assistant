@@ -11,3 +11,4 @@ Thumbs.db
 # Project data
 app/data/sessions/*.json
 app/keys/
+app/keys/
