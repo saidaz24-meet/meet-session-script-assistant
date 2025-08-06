@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Sign up</h2>
+<form id="signupForm" onsubmit="return false;">
+  <p><input id="name" type="text" placeholder="Full name" required></p>
+  <p><input id="email" type="email" placeholder="Email" required></p>
+  <p><input id="password" type="password" placeholder="Password" required></p>
+  <button class="button" id="signupBtn">Create account</button>
+</form>
+<p class="muted">Have an account? <a href="{{ url_for('auth.login_page') }}">Sign in</a></p>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-auth-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "{{ fb_api_key }}",
+    authDomain: "{{ fb_auth_domain }}",
+    projectId: "{{ fb_project_id }}",
+    appId: "{{ fb_app_id }}",
+    messagingSenderId: "{{ fb_sender_id }}"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  document.getElementById("signupBtn").addEventListener("click", async () => {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    try {
+      const cred = await auth.createUserWithEmailAndPassword(email, password);
+      await cred.user.updateProfile({ displayName: name });
+      const idToken = await cred.user.getIdToken();
+      const res = await fetch("/auth/session", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({ idToken })
+      });
+      if (!res.ok) throw new Error("Server session failed");
+      window.location.href = "{{ url_for('web.home') }}";
+    } catch (e) {
+      alert("Signup failed: " + e.message);
+    }
+  });
+</script>
+{% endblock %}

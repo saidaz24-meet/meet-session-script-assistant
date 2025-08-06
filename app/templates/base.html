@@ -3,29 +3,40 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>MSSA — MEET Session Script Assistant</title>
+  <title>MSSA</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <script defer src="{{ url_for('static', filename='js/main.js') }}"></script>
 </head>
 <body>
-  <nav class="nav">
+<nav class="nav">
+  <div class="left">
     <a href="{{ url_for('web.home') }}">Home</a>
     <a href="{{ url_for('web.upload_page') }}">Upload</a>
     <a href="{{ url_for('web.configure_page') }}">Configure</a>
-  </nav>
-
-  {% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-  <div class="flash-area">
-    {% for category, msg in messages %}
-      <div class="flash {{ category }}">{{ msg }}</div>
-    {% endfor %}
+    <a href="{{ url_for('web.editor') }}">Editor</a>
   </div>
-  {% endif %}
-  {% endwith %}
+  <div class="right">
+    {% if g.user %}
+      <span class="muted">Hi, {{ g.user.name or g.user.email }}</span>
+      <a href="{{ url_for('auth.logout') }}">Sign out</a>
+    {% else %}
+      <a href="{{ url_for('auth.login_page') }}">Sign in</a> ·
+      <a href="{{ url_for('auth.signup_page') }}">Sign up</a>
+    {% endif %}
+  </div>
+</nav>
 
-  <main class="container">
-    {% block content %}{% endblock %}
-  </main>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="flash-area">
+  {% for category, msg in messages %}
+  <div class="flash {{ category }}">{{ msg }}</div>
+  {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
+<main class="container">
+  {% block content %}{% endblock %}
+</main>
 </body>
 </html>

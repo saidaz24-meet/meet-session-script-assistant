@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Transcript Editor (JSON)</h2>
+<form method="post" action="{{ url_for('web.editor_save') }}">
+  <textarea name="json_input" rows="26" style="width:100%">{{ initial }}</textarea>
+  <div class="actions">
+    <button class="button" type="submit">Save & Open Player</button>
+  </div>
+</form>
+{% endblock %}

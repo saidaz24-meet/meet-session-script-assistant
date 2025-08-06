@@ -9,6 +9,7 @@
     <label><input type="checkbox" name="instructor_style" value="call-and-response" checked> call-and-response</label>
     <label><input type="checkbox" name="instructor_style" value="story-driven"> story-driven</label>
     <label><input type="checkbox" name="instructor_style" value="Socratic"> Socratic</label>
+    <p><textarea name="free_text_styles" placeholder="Extra style notes (free text)"></textarea></p>
   </fieldset>
 
   <fieldset>
@@ -16,9 +17,10 @@
     <label><input type="checkbox" name="requested_modes" value="hooks"> hooks</label>
     <label><input type="checkbox" name="requested_modes" value="punchlines"> punchlines</label>
     <label><input type="checkbox" name="requested_modes" value="acts"> acts</label>
-    <label><input type="checkbox" name="requested_modes" value="clarifying-Qs"> clarifying‑Qs</label>
-    <label><input type="checkbox" name="requested_modes" value="vibe-reset"> vibe‑reset</label>
-    <label><input type="checkbox" name="requested_modes" value="full-highlight-script" checked> full‑highlight‑script</label>
+    <label><input type="checkbox" name="requested_modes" value="clarifying-Qs"> clarifying-Qs</label>
+    <label><input type="checkbox" name="requested_modes" value="vibe-reset"> vibe-reset</label>
+    <label><input type="checkbox" name="requested_modes" value="full-highlight-script" checked> full-highlight-script</label>
+    <p><textarea name="free_text_modes" placeholder="Extra mode instructions (free text)"></textarea></p>
   </fieldset>
 
   <fieldset>
@@ -29,6 +31,7 @@
     <label>Instructor count:
       <input type="number" name="instructor_count" min="1" max="3" value="2">
     </label>
+    <p><textarea name="free_text_context" placeholder="Extra context (free text)"></textarea></p>
   </fieldset>
 
   <fieldset>
@@ -41,6 +44,7 @@
     {% for v in meet_values %}
     <label><input type="checkbox" name="meet_values" value="{{ v }}" {% if loop.index0 < 3 %}checked{% endif %}> {{ v }}</label>
     {% endfor %}
+    <p><textarea name="free_text_values" placeholder="Extra value prompts (free text)"></textarea></p>
   </fieldset>
 
   <button class="button" type="submit">Save & Generate</button>

@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>MEET Session Script Assistant</h1>
-  <p>Upload slides → configure style & modes → generate a values‑aligned highlight script.</p>
-  <a class="button" href="{{ url_for('web.upload_page') }}">Get Started</a>
+<h1>MEET Session Script Assistant</h1>
+<p>Two flows:</p>
+<ol>
+  <li><b>Slides → LLM → Highlight Script & Viewer</b> (Upload → Configure → Generate)</li>
+  <li><b>Transcript Player</b> (Editor → Player)</li>
+</ol>
+<div class="actions">
+  <a class="button" href="{{ url_for('web.upload_page') }}">Start Slide → Script</a>
+  <a class="button outline" href="{{ url_for('web.editor') }}">Open Transcript Editor</a>
+</div>
 {% endblock %}

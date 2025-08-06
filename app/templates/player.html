@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Player — Two-Column View</h2>
+<div id="player" class="grid">
+  <section class="left">
+    <div id="transcript"></div>
+    <div class="actions">
+      <button class="button" id="emailBtn">Send Transcript via Email</button>
+    </div>
+  </section>
+  <section class="right">
+    <div class="slides">
+      <div id="slidePreview"></div>
+      <div class="nav">
+        <button id="prevBtn" class="button outline">← Prev</button>
+        <span id="slideCounter" class="muted"></span>
+        <button id="nextBtn" class="button">Next →</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+    const SLIDES = {{ slides_json|tojson }};
+    const TRANSCRIPT_ID = {{ tid|tojson }};
+</script>
+
+<script src="{{ url_for('static', filename='js/player.js') }}"></script>
+{% endblock %}

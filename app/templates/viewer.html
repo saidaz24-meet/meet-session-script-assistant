@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Slide Viewer</h2>
+<div id="viewer" class="grid">
+  <section class="left">
+    <div id="scriptContainer"></div>
+    <div class="actions">
+      <button class="button" id="emailBtn">Send This Slide’s Script</button>
+    </div>
+  </section>
+  <section class="right">
+    <div class="slides">
+      <div id="slidePreview" class="slide"></div>
+      <div class="nav">
+        <button id="prevBtn" class="button outline">← Prev</button>
+        <span id="slideCounter" class="muted"></span>
+        <button id="nextBtn" class="button">Next →</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  const VIEWER_IMAGES = {{ images|tojson }};
+  const VIEWER_SCRIPT  = {{ output|tojson }};
+  const VIEWER_SESSION_ID = "{{ session_id }}";
+</script>
+<script src="{{ url_for('static', filename='js/viewer.js') }}"></script>
+{% endblock %}
