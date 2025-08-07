@@ -6,6 +6,8 @@ from ..services.renderer import render_pdf_to_images
 from ..services.prompt_builder import build_highlight_prompt
 from ..config import Config
 import re, json
+import traceback
+
 
 bp = Blueprint("api", __name__)
 
@@ -138,6 +140,7 @@ def send_email():
         emailer.send_email(to_email, subject, html)
         return jsonify({"ok": True})
     except Exception as e:
+        traceback.print_exc()
         return jsonify({"detail": str(e)}), 500
 
 # ---------- Chat condense (stub) ----------

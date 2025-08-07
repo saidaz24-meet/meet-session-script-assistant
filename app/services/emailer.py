@@ -1,6 +1,7 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.utils import formataddr
+from email.header import Header
 from ..config import Config
 
 def send_email(to_email: str, subject: str, html_body: str):
@@ -12,8 +13,8 @@ def send_email(to_email: str, subject: str, html_body: str):
 
     # Create UTF-8 MIME email
     msg = MIMEText(html_body, "html", "utf-8")
-    msg["Subject"] = subject
-    msg["From"] = formataddr((Config.SMTP_SENDER_NAME, Config.SMTP_FROM))
+    msg["Subject"] = str(Header(subject, "utf-8"))
+    msg["From"] = formataddr((str(Header(Config.SMTP_SENDER_NAME, "utf-8")), Config.SMTP_FROM))
     msg["To"] = to_email
 
     with smtplib.SMTP(Config.SMTP_HOST, Config.SMTP_PORT) as server:

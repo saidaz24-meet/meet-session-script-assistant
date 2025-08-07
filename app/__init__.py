@@ -21,7 +21,10 @@ if not firebase_admin._apps:  # ensures only runs once
     else:
         print("WARNING: Firebase credentials not found or path invalid.")
 
-
+print("SMTP_USERNAME =", repr(os.getenv("SMTP_USERNAME")))
+print("SMTP_APP_PASSWORD =", repr(os.getenv("SMTP_APP_PASSWORD")))
+print("SMTP_FROM =", repr(os.getenv("SMTP_FROM")))
+print("SMTP_SENDER_NAME =", repr(os.getenv("SMTP_SENDER_NAME")))
 
 def create_app():
     app = Flask(__name__, static_folder="static", template_folder="templates")
