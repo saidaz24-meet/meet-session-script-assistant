@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from ..config import Config
 from ..services.firebase import verify_id_token
+from werkzeug.security import check_password_hash, generate_password_hash
+
 
 bp = Blueprint("auth", __name__, template_folder="../templates")
 
@@ -27,15 +29,28 @@ def signup_page():
 def create_session():
     data = request.get_json(silent=True) or {}
     id_token = data.get("idToken", "")
+    
+    if not id_token:
+        print("DEBUG: No idToken provided in session creation request")
+        return {"detail": "Missing idToken"}, 400
+    
     try:
+        print(f"DEBUG: Verifying ID token...")
         decoded = verify_id_token(id_token)
+        print(f"DEBUG: Token verified successfully for user: {decoded.get('uid')}")
+        
         session["user"] = {
             "uid": decoded.get("uid"),
             "email": decoded.get("email"),
-            "name": decoded.get("name") or decoded.get("email")
+            "name" : decoded.get("name") or decoded.get("displayName") or ""
         }
+        session.permanent = True
+        
+        print(f"DEBUG: Session created for user: {session['user']['email']}")
         return {"ok": True}
+        
     except Exception as e:
+        print(f"DEBUG: Session creation failed: {str(e)}")
         return {"detail": str(e)}, 401
 
 @bp.get("/logout")

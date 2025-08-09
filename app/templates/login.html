@@ -18,7 +18,10 @@
     appId: "{{ fb_app_id }}",
     messagingSenderId: "{{ fb_sender_id }}"
   };
+  if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
+  }
+
   const auth = firebase.auth();
 
   document.getElementById("loginBtn").addEventListener("click", async () => {

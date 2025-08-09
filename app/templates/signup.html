@@ -19,25 +19,61 @@
     appId: "{{ fb_app_id }}",
     messagingSenderId: "{{ fb_sender_id }}"
   };
-  firebase.initializeApp(firebaseConfig);
+  
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+
   const auth = firebase.auth();
 
   document.getElementById("signupBtn").addEventListener("click", async () => {
     const name = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
+    
+    if (!name || !email || !password) {
+      alert("Please fill in all fields");
+      return;
+    }
+    
+    const signupBtn = document.getElementById("signupBtn");
+    signupBtn.disabled = true;
+    signupBtn.textContent = "Creating account...";
+    
     try {
+      console.log("Creating user with Firebase...");
       const cred = await auth.createUserWithEmailAndPassword(email, password);
+      console.log("User created successfully:", cred.user.uid);
+      
+      console.log("Updating profile...");
       await cred.user.updateProfile({ displayName: name });
-      const idToken = await cred.user.getIdToken();
+      await cred.user.reload();                    // ⬅ refresh cached user
+      console.log("Profile updated successfully");
+      
+      console.log("Getting ID token...");
+      const idToken = await cred.user.getIdToken(true);
+      console.log("ID token obtained");
+      
+      console.log("Creating server session...");
       const res = await fetch("/auth/session", {
         method: "POST",
         headers: {"Content-Type":"application/json"},
         body: JSON.stringify({ idToken })
       });
-      if (!res.ok) throw new Error("Server session failed");
+      
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(`Server session failed: ${errorData.detail || res.statusText}`);
+      }
+      
+      console.log("Server session created successfully");
+      console.log("Redirecting to home page...");
       window.location.href = "{{ url_for('web.home') }}";
+      
     } catch (e) {
+      console.error("Signup error:", e);
+      signupBtn.disabled = false;
+      signupBtn.textContent = "Create account";
       alert("Signup failed: " + e.message);
     }
   });

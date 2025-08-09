@@ -1,10 +1,13 @@
 import os
 from dotenv import load_dotenv
 load_dotenv()
+from datetime import timedelta
+
 
 BASE_DIR = os.path.dirname(__file__)
 
 class Config:
+    PERMANENT_SESSION_LIFETIME = timedelta(hours=1)
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-change-me")
     MAX_CONTENT_LENGTH_MB = float(os.getenv("MAX_CONTENT_LENGTH_MB", "25"))
     MAX_CONTENT_LENGTH = int(MAX_CONTENT_LENGTH_MB * 1024 * 1024)

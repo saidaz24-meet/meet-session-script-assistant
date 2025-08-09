@@ -1,13 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>MEET Session Script Assistant</h1>
-<p>Two flows:</p>
-<ol>
-  <li><b>Slides → LLM → Highlight Script & Viewer</b> (Upload → Configure → Generate)</li>
-  <li><b>Transcript Player</b> (Editor → Player)</li>
-</ol>
-<div class="actions">
-  <a class="button" href="{{ url_for('web.upload_page') }}">Start Slide → Script</a>
-  <a class="button outline" href="{{ url_for('web.editor') }}">Open Transcript Editor</a>
+
+<div class="homepage-container">
+  <h1 class="title">🚀 MEET Session Script Assistant</h1>
+  <p class="subtitle">Choose a workflow to begin:</p>
+
+  <div class="card-container">
+    <div class="card">
+      <h2>📊 Slide to Script</h2>
+      <p>Upload your slides and get a highlight script generated with AI.</p>
+      <ul>
+        <li>Upload</li>
+        <li>Configure</li>
+        <li>Generate</li>
+      </ul>
+      <a class="btn primary" href="{{ url_for('web.upload_page') }}">Start Flow</a>
+    </div>
+
+    <div class="card">
+      <h2>🎙️ Transcript Player</h2>
+      <p>Edit and play your own MEET session transcript with full control.</p>
+      <ul>
+        <li>Editor</li>
+        <li>Player</li>
+      </ul>
+      <a class="btn secondary" href="{{ url_for('web.editor') }}">Open Editor</a>
+    </div>
+  </div>
 </div>
+
 {% endblock %}

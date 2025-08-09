@@ -1,29 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Slide Viewer</h2>
-<div id="viewer" class="grid">
-  <section class="left">
-    <div id="scriptContainer"></div>
-    <div class="actions">
-      <button class="button" id="emailBtn">Send This Slide’s Script</button>
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/viewer.css') }}">
+
+<div class="viewer-grid">
+  <!-- Slides (right) ---------------------------------------------->
+  <section class="slide-pane">
+    <div id="slidePreview" class="slide-box"></div>
+
+    <div class="nav">
+      <button id="prevBtn" class="btn ghost">← Prev</button>
+      <span   id="slideCounter"></span>
+      <button id="nextBtn" class="btn">Next →</button>
+      <button id="emailBtn" class="btn ghost">✉ Send</button>
     </div>
   </section>
-  <section class="right">
-    <div class="slides">
-      <div id="slidePreview" class="slide"></div>
-      <div class="nav">
-        <button id="prevBtn" class="button outline">← Prev</button>
-        <span id="slideCounter" class="muted"></span>
-        <button id="nextBtn" class="button">Next →</button>
-      </div>
-    </div>
-  </section>
+
+  <!-- Script cards (left) ----------------------------------------->
+  <section id="windows" class="windows"></section>
 </div>
 
-<script>
-  const VIEWER_IMAGES = {{ images|tojson }};
-  const VIEWER_SCRIPT  = {{ output|tojson }};
-  const VIEWER_SESSION_ID = "{{ session_id }}";
+{# ─────────────  JSON-blob with ALL data  ───────────── #}
+<script id="viewer-data" type="application/json">
+  {{ {
+       "images": images,
+       "script": output,
+       "modes" : config.requested_modes
+     } | tojson | safe }}
 </script>
+
 <script src="{{ url_for('static', filename='js/viewer.js') }}"></script>
 {% endblock %}

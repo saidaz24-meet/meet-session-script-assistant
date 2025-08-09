@@ -23,7 +23,10 @@ def _require_login():
 
 @bp.get("/")
 def home():
-    return render_template("home.html")
+    if not session.get("user"):
+        return redirect(url_for("auth.login_page"))
+    return render_template("home.html", user=session["user"])
+
 
 # ---------- Slide/LLM flow ----------
 @bp.get("/upload")
@@ -173,7 +176,18 @@ def generate_page():
         "highlight_script": output,
         "images": images
     })
-    return render_template("viewer.html", output=output, images=images, session_id=gen_id)
+
+    print("DEBUG viewer payload:")
+    print(f"  - {len(images)} images")
+    print(f"  - {len(output)} chars of script")
+    print(f"  - Script preview: {output[:200]}...")
+    print(f"  - Config modes: {cfg.get('requested_modes', [])}")
+
+    return render_template("viewer.html", 
+                         output=output, 
+                         images=images, 
+                         session_id=gen_id,
+                         config=cfg)
 
 # ---------- Transcript Editor/Player ----------
 @bp.get("/editor")

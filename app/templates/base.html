@@ -16,7 +16,7 @@
   </div>
   <div class="right">
     {% if g.user %}
-      <span class="muted">Hi, {{ g.user.name or g.user.email }}</span>
+      <span class="muted">Hi, {{ g.user.name }}</span>
       <a href="{{ url_for('auth.logout') }}">Sign out</a>
     {% else %}
       <a href="{{ url_for('auth.login_page') }}">Sign in</a> ·

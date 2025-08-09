@@ -4,11 +4,11 @@ __pycache__/
 .venv/
 .env
 
-# OS
-.DS_Store
-Thumbs.db
+# App/runtime
+uploads/
+images/
+static/rendered/*
+*.zip
 
-# Project data
-app/data/sessions/*.json
-app/keys/
-app/keys/
+# Mac
+.DS_Store
