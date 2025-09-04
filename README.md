@@ -50,26 +50,7 @@ python3 -m venv myenv && source myenv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env   # or create .env and fill values below
 python run.py          # open http://127.0.0.1:5000
-.env (minimal)
-ini
-Copy code
-# LLM
-GEMINI_API_KEY=your_key
-
-# Gmail (App Password)
-SMTP_USERNAME=your@gmail.com
-SMTP_APP_PASSWORD=xxxx xxxx xxxx xxxx
-
-# Firebase (client-side auth for signup/login)
-FIREBASE_API_KEY=...
-FIREBASE_AUTH_DOMAIN=yourproj.firebaseapp.com
-FIREBASE_PROJECT_ID_WEB=yourproj
-FIREBASE_APP_ID=1:...:web:...
-FIREBASE_MESSAGING_SENDER_ID=...
-
-# App
-SECRET_KEY=change-me
-ALLOWED_ORIGINS=http://127.0.0.1:5000,http://localhost:5000
+```
 🌀 Flow
 ✍️ Sign up / log in (email + password).
 
